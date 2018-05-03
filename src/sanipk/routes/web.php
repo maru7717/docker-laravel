@@ -17,17 +17,16 @@ use App\Http\Controllers\LinkController;
 //  return view('welcome');
 //});
 Route::redirect('/', '/sessions');
-    
-// Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
   {
     Route::resource('posts', 'Admin\PostsController');
   }
 );
-// Auth::routes();
 
 Route::resource('sessions', 'SessionController');
 
