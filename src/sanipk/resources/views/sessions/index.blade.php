@@ -11,9 +11,9 @@
            <div class="alert alert-success">{{ Session::get('flash_message') }}</div>
         @endif
 
-          <div class="mb10"><!--
-            {!! link_to('sessions/create', '新規作成', ['class' => 'btn btn-primary']) !!}
-          </div>  -->
+<!--           <div class="mb10"> -->
+<!--             {!! link_to('sessions/create', '新規作成', ['class' => 'btn btn-primary']) !!} -->
+<!--           </div> -->
 
           <table class="table table-striped table-bordered table-hover">
             <thead>

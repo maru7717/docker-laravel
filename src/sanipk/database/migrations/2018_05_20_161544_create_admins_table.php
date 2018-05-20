@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMemosTable extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateMemosTable extends Migration
      */
     public function up()
     {
-        Schema::create('memos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->string('tag');
-            $table->timestamps();
+        Schema::create('admins', function (Blueprint $table) {
+          $table->increments('id');
+          $table->string('name');
+          $table->string('email')->unique();
+          $table->string('password');
+          $table->rememberToken();
+          $table->timestamps();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateMemosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('memos');
+        Schema::dropIfExists('admins');
     }
 }

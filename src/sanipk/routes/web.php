@@ -13,40 +13,33 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\LinkController;
 
-//Route::get('/', function () {
-//  return view('welcome');
-//});
 Route::redirect('/', '/sessions');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// User 認証不要
+Route::get('/', function () { return redirect('/home'); });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
-  {
-    Route::resource('posts', 'Admin\PostsController');
-  }
-);
+// User ログイン後
+Route::group(['middleware' => 'auth:user'], function() {
+  Route::get('/home', 'HomeController@index')->name('home');
+});
+
+// Admin 認証不要
+Route::group(['prefix' => 'admin'], function() {
+  Route::get('/',         function () { return redirect('/admin/home'); });
+  Route::get('login',     'Admin\LoginController@showLoginForm')->name('admin.login');
+  Route::post('login',    'Admin\LoginController@login');
+});
+
+// Admin ログイン後
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
+  Route::post('logout',   'Admin\LoginController@logout')->name('admin.logout');
+  Route::get('home',      'Admin\HomeController@index')->name('admin.home');
+});
 
 Route::resource('sessions', 'SessionController');
-
-
-Route::get('movies/update', 'MovieController@update');
 // Route::get('sessions/create', 'SessionController@create');
 // Route::post('sessions/create', 'SessionController@store');
 
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Route::resource('posts', 'PostsController', ['only' => [
-//   'index', 'show'
-// ]]);
-
-// Route::get('/articles', 'ArticleController@index');
-// Route::get('/articles/create', 'ArticleController@create');
-// Route::post('/articles/create', 'ArticleController@store');
-// Route::get('/articles/edit/{id}', 'ArticleController@edit');
-// Route::post('/articles/edit', 'ArticleController@update');
-// Route::get('/articles/delete/{id}', 'ArticleController@show');
-// Route::post('/articles/delete', 'ArticleController@delete');
-
-// Route::get('/memos', 'MemosController@index');
+Route::get('movies/update', 'MovieController@update');
