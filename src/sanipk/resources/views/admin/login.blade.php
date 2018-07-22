@@ -1,7 +1,15 @@
 @extends('layouts.app_admin')
 
+@section('style')
+<style>
+  body { background: url("../img/sanipk_bg_login.png") no-repeat center center; }
+  .panel { background:transparent; }
+  .panel-default>.panel-heading { background:transparent; }
+</style>
+@endsection
+
 @section('content')
-<div class="container">
+<div class="container" style="width:100%;">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">

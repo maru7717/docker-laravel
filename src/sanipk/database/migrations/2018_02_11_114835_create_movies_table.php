@@ -20,7 +20,7 @@ class CreateMoviesTable extends Migration
             $table->dateTimeTz('published_at');
             $table->string('duration');
             $table->integer('player_id');
-            $table->integer('session_id')->nullable();;
+            $table->integer('session_id')->nullable();
             $table->timestamps();
         });
 

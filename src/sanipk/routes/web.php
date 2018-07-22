@@ -13,17 +13,21 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\LinkController;
 
-Route::redirect('/', '/sessions');
-
 Auth::routes();
 
 // User 認証不要
-Route::get('/', function () { return redirect('/home'); });
+Route::get('/', function () { return redirect('/sessions'); });
+Route::get('sessions', 'SessionController@index');
+
+Route::resource('sessions', 'SessionController', ['only' => ['index', 'show']]);
+
 
 // User ログイン後
 Route::group(['middleware' => 'auth:user'], function() {
   Route::get('/home', 'HomeController@index')->name('home');
+  Route::resource('sessions', 'SessionController', ['except' => ['index', 'show']]);
 });
+
 
 // Admin 認証不要
 Route::group(['prefix' => 'admin'], function() {
@@ -32,14 +36,14 @@ Route::group(['prefix' => 'admin'], function() {
   Route::post('login',    'Admin\LoginController@login');
 });
 
+
 // Admin ログイン後
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
   Route::post('logout',   'Admin\LoginController@logout')->name('admin.logout');
   Route::get('home',      'Admin\HomeController@index')->name('admin.home');
+  Route::get('movies/', 'Admin\MovieController@index')->name('admin.movies');;
+  Route::get('movies/get', 'Admin\MovieController@get');
+  Route::post('movies/store', 'Admin\MovieController@store');
+  Route::get('movies/update', 'Admin\MovieController@update');
 });
 
-Route::resource('sessions', 'SessionController');
-// Route::get('sessions/create', 'SessionController@create');
-// Route::post('sessions/create', 'SessionController@store');
-
-Route::get('movies/update', 'MovieController@update');

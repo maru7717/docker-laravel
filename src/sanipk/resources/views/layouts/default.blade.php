@@ -39,7 +39,10 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                    @if (Auth::guard('user')->user())
+                        <li><a href="{{ route('sessions.index') }}">セッション一覧</a></li>
+                        <li><a href="{{ route('admin.movies') }}">動画一覧</a></li>
+                    @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
